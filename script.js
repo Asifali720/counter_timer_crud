@@ -13,16 +13,16 @@ let timer = null
 let booleanForButton = false
 
 button.addEventListener('click', ()=>{
-    startWatch()
+    // startWatch()
     if(booleanForButton === false){
         booleanForButton = true
         button.innerText = 'Start time'
-        resetOrStop()
         
+        startWatch()
     }else if(booleanForButton === true){
        
-        startWatch()
-
+       
+        resetOrStop()
         booleanForButton = false
         button.innerText = 'Stop time'
         
@@ -67,6 +67,7 @@ function resetOrStop(){
     data['hour']= hours
     data['minutes']= minutes
     data['seconds']= seconds 
+    
     timeContainer.innerHTML += ` <div class="w-full bg-blue-100 rounded-full px-3 py-2 flex items-center justify-between mb-2" id="record-time" >
     <p class="font-bold text-gray-900"><span>${hours}</span> hour <span>${minutes}</span> min <span>${seconds}</span> sec</p>
     <div class="flex flex-row-reverse items-center gap-2">
@@ -84,5 +85,5 @@ function reomveTimer(e){
     e.parentElement.parentElement.remove()
 }
 
-const output = startWatch()
-console.log(output)
+// const output = startWatch()
+// console.log(output)
