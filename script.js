@@ -2,6 +2,7 @@
 const button = document.getElementById("button")
 const recordTime = document.getElementById("record-time")
 const timeContainer = document.getElementById("time-container")
+const lastTime = document.getElementById('last-time')
 
 console.log(button);
 
@@ -12,11 +13,13 @@ let timer = null
 
 let booleanForButton = false
 
+
+
 button.addEventListener('click', ()=>{
     // startWatch()
     if(booleanForButton === false){
         booleanForButton = true
-        button.innerText = 'Start time'
+        button.innerText = 'stop time'
         
         startWatch()
     }else if(booleanForButton === true){
@@ -24,7 +27,7 @@ button.addEventListener('click', ()=>{
        
         resetOrStop()
         booleanForButton = false
-        button.innerText = 'Stop time'
+        button.innerText = 'start time'
         
 
     }
@@ -75,6 +78,7 @@ function resetOrStop(){
      <i class="fa fa-times-circle-o" aria-hidden="true"></i>  
      </button>
     </div> `
+    lastTime.innerHTML = `${minutes} min ${seconds} sec`
     console.log(data)
     clearInterval(timer);
     [seconds, minutes, hours] = [0,0,0];
@@ -84,6 +88,3 @@ function resetOrStop(){
 function reomveTimer(e){
     e.parentElement.parentElement.remove()
 }
-
-// const output = startWatch()
-// console.log(output)

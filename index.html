@@ -24,8 +24,13 @@
         </div>
         <div class="mt-6">
           <span class="block text-[45px] text-center text-[#050A30] font-semibold" id="display-time">00:00:00</span>
+          <select class="w-[200px] mx-auto block p-2 bg-[#050A30] rounded-full text-white">
+            <option value="Gym">Gym</option>
+            <option value="walking">walking</option>
+            <option value="yoga">yoga</option>
+          </select>
           <p class="text-xs text-center font-bold text-[#050A30] mt-6">Time since last Contraction</p>
-          <span class="font-extrabold text-xs text-center block text-[#050A30]">7 min 32 sec</span>
+          <span class="font-extrabold text-xs text-center block text-[#050A30]" id="last-time">0 min 0 sec</span>
           <div class="w-full flex items-center justify-center my-6">
              <button class="p-4 bg-[#050A30] text-white font-bold rounded-full transition ease-in-out duration-300 active:bg-black hover:scale-110 " id="button">Start time</button>
           </div>
