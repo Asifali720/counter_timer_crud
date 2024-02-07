@@ -8,3 +8,10 @@
     align-items: center;
     justify-content: space-between;
 }
+.scroll_bar::-webkit-scrollbar{
+    width: 4px;
+}
+.scroll_bar::-webkit-scrollbar-thumb{
+    background-color: #050A30;
+    border-radius: 5px;
+}
