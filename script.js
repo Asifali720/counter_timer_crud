@@ -1,4 +1,3 @@
-// *javaScript code
 const button = document.getElementById("button")
 const recordTime = document.getElementById("record-time")
 const timeContainer = document.getElementById("time-container")
@@ -55,7 +54,7 @@ let s = seconds < 10 ? "0"+seconds : seconds
 
    displayTime.innerHTML = h+':'+m+':'+s; 
 }
-let data = {}
+let data = []
 
 console.log(data);
 
@@ -67,17 +66,31 @@ function startWatch(){
 }
 
 function resetOrStop(){
-    data['hour']= hours
-    data['minutes']= minutes
-    data['seconds']= seconds 
-    
-    timeContainer.innerHTML += ` <div class="w-full bg-blue-100 rounded-full px-3 py-2 flex items-center justify-between mb-2" id="record-time" >
-    <p class="font-bold text-gray-900"><span>${hours}</span> hour <span>${minutes}</span> min <span>${seconds}</span> sec</p>
-    <div class="flex flex-row-reverse items-center gap-2">
-     <button onClick='reomveTimer(this)'>
-     <i class="fa fa-times-circle-o" aria-hidden="true"></i>  
-     </button>
-    </div> `
+    data.push({
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds
+    })
+    console.log(data, 'data is success');
+    localStorage.setItem('data', JSON.stringify(data));
+    newTodo()
+}
+const newTodo = () =>{
+    timeContainer.innerHTML = ''
+    {
+        data.map(({hours, minutes, seconds})=>{
+            return  timeContainer.innerHTML += ` <div class="w-full bg-blue-100 rounded-full px-3 py-2 flex items-center justify-between mb-2" id="record-time" >
+            <p class="font-bold text-gray-900"><span>${hours}</span> hour <span>${minutes}</span> min <span>${seconds}</span> sec</p>
+            <div class="flex flex-row-reverse items-center gap-2">
+             <button onClick='removeTimer(this)'>
+             <i class="fa fa-times-circle-o" aria-hidden="true"></i>  
+             </button>
+            </div> `
+        })
+    }
+
+    resetData()
+
     lastTime.innerHTML = `${minutes} min ${seconds} sec`
     console.log(data)
     clearInterval(timer);
@@ -85,6 +98,22 @@ function resetOrStop(){
     displayTime.innerHTML = '00:00:00'; 
 }
 
-function reomveTimer(e){
-    e.parentElement.parentElement.remove()
+function removeTimer(e) {
+    const id = e.parentElement.parentElement.id;
+    const removedData = data.splice(id, 1);
+    localStorage.setItem('data', JSON.stringify(data));
+    resetData();
+    e.parentElement.parentElement.remove();
+    console.log(removedData, 'removedData');
 }
+let resetData = ()=>{
+    minutes= ''
+    seconds= ''
+    hours= ''
+    console.log('working');
+}
+
+(() => {
+    data = JSON.parse(localStorage.getItem('data')) || [];
+    newTodo()
+  })();
