@@ -2,8 +2,12 @@ const button = document.getElementById("button")
 const recordTime = document.getElementById("record-time")
 const timeContainer = document.getElementById("time-container")
 const lastTime = document.getElementById('last-time')
+const dropDown = document.getElementById('drop-down')
+const selectBtn = document.getElementById('select-btn')
+const chevronIcon = document.getElementById('chevron-icon')
+const items = document.getElementsByClassName('items')
+const selectedText = document.getElementById('selected-text')
 
-console.log(button);
 
 let [seconds, minutes, hours] = [0, 0, 0]
 
@@ -11,6 +15,38 @@ let displayTime = document.getElementById('display-time')
 let timer = null
 
 let booleanForButton = false
+
+let value = ''
+
+
+selectBtn.addEventListener('click', ()=>{
+    selectDropDown()
+    dropDown.classList.remove('hidden')
+})
+
+let showDropDown = false
+ 
+const selectDropDown = ()=>{
+    if(showDropDown === false){
+        showDropDown = true
+        chevronIcon.classList.add('rotate-180')
+        dropDown.classList.add('h-[120px]')
+    }else if(showDropDown === true){
+        showDropDown = false
+        chevronIcon.classList.remove('rotate-180')
+        dropDown.classList.remove('h-[120px]')
+    }
+}
+
+for(item of items){
+    item.onclick = function () {
+        selectedText.innerHTML = this.textContent;
+        value = selectedText.innerText
+        showDropDown = false
+        chevronIcon.classList.remove('rotate-180')
+        dropDown.classList.add('hidden')
+    }
+}
 
 
 
@@ -30,8 +66,6 @@ button.addEventListener('click', ()=>{
         
 
     }
-    console.log('working');
-    console.log(booleanForButton, 'boolean');
 })
 
 
@@ -56,8 +90,6 @@ let s = seconds < 10 ? "0"+seconds : seconds
 }
 let data = []
 
-console.log(data);
-
 function startWatch(){
     if(timer !== null){
         clearInterval(timer)
@@ -69,18 +101,19 @@ function resetOrStop(){
     data.push({
         hours: hours,
         minutes: minutes,
-        seconds: seconds
+        seconds: seconds,
+        value: value
     })
-    console.log(data, 'data is success');
     localStorage.setItem('data', JSON.stringify(data));
     newTodo()
 }
 const newTodo = () =>{
     timeContainer.innerHTML = ''
     {
-        data.map(({hours, minutes, seconds})=>{
+        data.map(({hours, minutes, seconds, value})=>{
             return  timeContainer.innerHTML += ` <div class="w-full bg-blue-100 rounded-full px-3 py-2 flex items-center justify-between mb-2" id="record-time" >
             <p class="font-bold text-gray-900"><span>${hours}</span> hour <span>${minutes}</span> min <span>${seconds}</span> sec</p>
+            <p class="font-bold text-gray-900">${value}</p>
             <div class="flex flex-row-reverse items-center gap-2">
              <button onClick='removeTimer(this)'>
              <i class="fa fa-times-circle-o" aria-hidden="true"></i>  
@@ -92,10 +125,10 @@ const newTodo = () =>{
     resetData()
 
     lastTime.innerHTML = `${minutes} min ${seconds} sec`
-    console.log(data)
     clearInterval(timer);
     [seconds, minutes, hours] = [0,0,0];
     displayTime.innerHTML = '00:00:00'; 
+    
 }
 
 function removeTimer(e) {
@@ -104,13 +137,11 @@ function removeTimer(e) {
     localStorage.setItem('data', JSON.stringify(data));
     resetData();
     e.parentElement.parentElement.remove();
-    console.log(removedData, 'removedData');
 }
 let resetData = ()=>{
     minutes= ''
     seconds= ''
     hours= ''
-    console.log('working');
 }
 
 (() => {
