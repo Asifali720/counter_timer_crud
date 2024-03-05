@@ -38,7 +38,7 @@ const selectDropDown = ()=>{
     }
 }
 
-for(item of items){
+for(let item of items){
     item.onclick = function () {
         selectedText.innerHTML = this.textContent;
         value = selectedText.innerText
@@ -51,7 +51,6 @@ for(item of items){
 
 
 button.addEventListener('click', ()=>{
-    // startWatch()
     if(booleanForButton === false){
         booleanForButton = true
         button.innerText = 'stop time'
@@ -121,14 +120,11 @@ const newTodo = () =>{
             </div> `
         })
     }
-
-    resetData()
-
     lastTime.innerHTML = `${minutes} min ${seconds} sec`
+    resetData()
     clearInterval(timer);
     [seconds, minutes, hours] = [0,0,0];
-    displayTime.innerHTML = '00:00:00'; 
-    
+    displayTime.innerHTML = '00:00:00';
 }
 
 function removeTimer(e) {
