@@ -7,6 +7,8 @@ const selectBtn = document.getElementById('select-btn')
 const chevronIcon = document.getElementById('chevron-icon')
 const items = document.getElementsByClassName('items')
 const selectedText = document.getElementById('selected-text')
+const bellButton = document.getElementById('bell')
+console.log(bellButton);
 
 
 let [seconds, minutes, hours] = [0, 0, 0]
@@ -17,7 +19,6 @@ let timer = null
 let booleanForButton = false
 
 let value = ''
-
 
 selectBtn.addEventListener('click', ()=>{
     selectDropDown()
@@ -67,7 +68,17 @@ button.addEventListener('click', ()=>{
     }
 })
 
+let alarmTone = new Audio('./assets/alarm-ringtone.mp3')
+let stopAlarmTone = false
+console.log(alarmTone);
 
+bellButton.addEventListener('click', ()=>{
+    stopAlarmTone = true;
+    if (stopAlarmTone) {
+        alarmTone.pause()
+        bellButton.classList.remove('rotate-animation')
+    }
+})
 
 
 function stopWatch (){
@@ -85,7 +96,13 @@ function stopWatch (){
 let m = minutes < 10 ? "0"+minutes : minutes
 let s = seconds < 10 ? "0"+seconds : seconds 
 
-   displayTime.innerHTML = h+':'+m+':'+s; 
+   displayTime.innerHTML = h+':'+m+':'+s;
+   if(minutes === 1){
+    alarmTone.play()
+    alarmTone.loop = true;
+    bellButton.classList.add('rotate-animation')
+   }
+   console.log(stopAlarmTone);
 }
 let data = []
 
@@ -110,7 +127,17 @@ const newTodo = () =>{
     timeContainer.innerHTML = ''
     {
         data.map(({hours, minutes, seconds, value})=>{
-            return  timeContainer.innerHTML += ` <div class="w-full bg-blue-100 rounded-full px-3 py-2 flex items-center justify-between mb-2" id="record-time" >
+            let styleClass = "";
+    if (seconds >= 15) {
+        styleClass = "bg-green-200 border-[1px] border-green-600";
+    } else if (seconds >= 10) {
+        styleClass = "bg-yellow-200 border-[1px] border-yellow-600";
+    } else if (seconds >= 5) {
+        styleClass = "bg-red-200 border-[1px] border-red-600";
+    } else {
+        styleClass = "bg-blue-200 border-[1px] border-blue-600";
+    }
+            return  timeContainer.innerHTML += ` <div class="w-full ${styleClass} rounded-full px-3 py-2 flex items-center justify-between mb-2" id="record-time" >
             <p class="font-bold text-gray-900"><span>${hours}</span> hour <span>${minutes}</span> min <span>${seconds}</span> sec</p>
             <p class="font-bold text-gray-900">${value}</p>
             <div class="flex flex-row-reverse items-center gap-2">
