@@ -15,18 +15,14 @@
     background-color: #050A30;
     border-radius: 5px;
 }
-@keyframes shake {
+@keyframes rotation {
     0%,
     100% {
       transform: rotate(0deg);
     }
-    20%,
-    60% {
-      transform: rotate(6deg);
-    }
-    40%,
-    80% {
-      transform: rotate(-6deg);
+    50%,
+    100% {
+      transform: rotate(180deg);
     }
   }
 
@@ -37,4 +33,9 @@
 .danger{
     background: rgb(244, 124, 124);
     border: 1px solid red;
+}
+.rotation-animation{
+  animation: rotation  2s;
+  animation-iteration-count: infinite;
+  transition: ease-in-out;
 }

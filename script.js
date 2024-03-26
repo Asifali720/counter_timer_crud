@@ -8,7 +8,6 @@ const chevronIcon = document.getElementById('chevron-icon')
 const items = document.getElementsByClassName('items')
 const selectedText = document.getElementById('selected-text')
 const bellButton = document.getElementById('bell')
-console.log(bellButton);
 
 
 let [seconds, minutes, hours] = [0, 0, 0]
@@ -69,16 +68,7 @@ button.addEventListener('click', ()=>{
 })
 
 let alarmTone = new Audio('./assets/alarm-ringtone.mp3')
-let stopAlarmTone = false
 console.log(alarmTone);
-
-bellButton.addEventListener('click', ()=>{
-    stopAlarmTone = true;
-    if (stopAlarmTone) {
-        alarmTone.pause()
-        bellButton.classList.remove('rotate-animation')
-    }
-})
 
 
 function stopWatch (){
@@ -101,8 +91,13 @@ let s = seconds < 10 ? "0"+seconds : seconds
     alarmTone.play()
     alarmTone.loop = true;
     bellButton.classList.add('rotate-animation')
+
+   setTimeout(()=>{
+      alarmTone.pause()
+      bellButton.classList.remove('rotate-animation')
+   }, 10000)
    }
-   console.log(stopAlarmTone);
+  
 }
 let data = []
 
@@ -128,11 +123,11 @@ const newTodo = () =>{
     {
         data.map(({hours, minutes, seconds, value})=>{
             let styleClass = "";
-    if (seconds >= 15) {
+    if (hours >= 1) {
         styleClass = "bg-green-200 border-[1px] border-green-600";
-    } else if (seconds >= 10) {
+    } else if (hours >= 2) {
         styleClass = "bg-yellow-200 border-[1px] border-yellow-600";
-    } else if (seconds >= 5) {
+    } else if (hours >= 3) {
         styleClass = "bg-red-200 border-[1px] border-red-600";
     } else {
         styleClass = "bg-blue-200 border-[1px] border-blue-600";
