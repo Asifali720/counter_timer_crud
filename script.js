@@ -87,7 +87,7 @@ let m = minutes < 10 ? "0"+minutes : minutes
 let s = seconds < 10 ? "0"+seconds : seconds 
 
    displayTime.innerHTML = h+':'+m+':'+s;
-   if(minutes === 1){
+   if(minutes === 60){
     alarmTone.play()
     alarmTone.loop = true;
     bellButton.classList.add('rotate-animation')
